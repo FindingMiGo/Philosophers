@@ -85,7 +85,7 @@ void	start_thread(t_life *life)
 	t_philos	*p;
 	unsigned int	i;
 
-	i = 0;	
+	i = 0;
 	p = life->philos;
 	gettimeofday(&tv, NULL);
 	while (i < life->pnum)
