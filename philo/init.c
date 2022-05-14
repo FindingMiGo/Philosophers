@@ -48,10 +48,7 @@ bool	validate_arg(int ac, char **av)
 bool	init_life(t_life *life, int ac, char **av)
 {
 	if (!validate_arg(ac, av))
-	{
-		write(1, "error\n", 6);
 		return (false);
-	}
 	ac--;
 	av++;
 	if (!atoi_philo(&life->pnum, av[0]))
@@ -79,9 +76,16 @@ bool	init_mutex(t_life *life)
 	i = 0;
 	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * life->pnum);
 	if (!life->forks)
+	{
+		printf("%s\n", "Memory allocation failure");
 		return (false);
-	pthread_mutex_init(&life->print, NULL);
-	pthread_mutex_init(&life->flag, NULL);
+	}
+	if (pthread_mutex_init(&life->print, NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&life->flag, NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&life->last_eat_m, NULL) != 0)
+		return (false);
 	while (i < life->pnum)
 	{
 		if (pthread_mutex_init(&life->forks[i], NULL) != 0)
@@ -99,7 +103,10 @@ bool	init_philos(t_life *life)
 	i = 0;
 	life->philos = malloc(sizeof(t_philos) * life->pnum);
 	if (!life->philos)
+	{
+		printf("%s\n", "Memory allocation failure");
 		return (false);
+	}
 	p = life->philos;
 	while (i < life->pnum)
 	{

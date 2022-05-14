@@ -13,7 +13,7 @@ void	print_act(t_philos *p, t_act act, int id)
 	}
 	if (act == DIE)
 		access_end_flag(p->life, WRITE, true);
-	printf(FMT, get_mstime(), id, msg[act]);
+	printf(FMT, get_mstime(), id + 1, msg[act]);
 	pthread_mutex_unlock(&p->life->print);
 }
 
@@ -35,7 +35,8 @@ bool	philo_take(t_philos *p)
 
 void	philo_eat(t_philos *p)
 {
-	p->last_eat = get_mstime();
+	access_last_eat(p, WRITE, get_mstime());
+	// p->last_eat = get_mstime();
 	print_act(p, EAT, p->right);
 	wait_for_time(p->life->teat);
 	pthread_mutex_unlock(&p->life->forks[p->right]);
@@ -51,7 +52,7 @@ void	*stomach_monitor(void *philo)
 	while (access_end_flag(p->life, READ, false) == false)
 	{
 		time = get_mstime();
-		if (time >= p->last_eat + p->life->tdie)
+		if (time >= access_last_eat(p, READ, 0) + p->life->tdie)
 		{
 			print_act(p, DIE, p->right);
 			break;
@@ -90,7 +91,8 @@ void	start_thread(t_life *life)
 	gettimeofday(&tv, NULL);
 	while (i < life->pnum)
 	{
-		p[i].last_eat = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+		access_last_eat(&p[i], WRITE, tv.tv_sec * 1000 + tv.tv_usec / 1000);
+		// p[i].last_eat = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 		pthread_create(&p[i].thread, NULL, &philo_routine, &p[i]);
 		i++;
 	}
@@ -106,11 +108,15 @@ int	main(int ac, char **av)
 {
 	t_life	life;
 	
-	init_life(&life, ac, av);
-	init_philos(&life);
+	if (!init_life(&life, ac, av))
+		return (0);
+	if (!init_philos(&life))
+		return (0);
 	init_mutex(&life);
 	start_thread(&life);
-	free(life.philos);
-	free(life.forks);
+	if (life.philos)
+		free(life.philos);
+	if (life.forks)
+		free(life.forks);
 	return (0);
 }

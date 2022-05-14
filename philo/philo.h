@@ -11,7 +11,7 @@
 # include "struct.h"
 # include "debug.h"
 
-# define FMT "%ld %d %s"
+# define FMT "%ld %3d %s"
 # define TAKE_MSG "has taken a fork\n"
 # define EAT_MSG "is eating\n"
 # define SLEEP_MSG "is sleeping\n"
@@ -19,7 +19,7 @@
 # define DIE_MSG "is died\n"
 
 # ifndef DELAY
-# 	define DELAY 100
+#  define DELAY 100
 # endif
 
 typedef enum e_act{
@@ -35,7 +35,7 @@ typedef enum e_rw{
 	WRITE
 }	t_rw;
 
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 bool	atoi_philo(unsigned int *num, const char *str);
 bool	atol_philo(unsigned long *num, const char *str);
 
@@ -44,5 +44,6 @@ bool	init_life(t_life *life, int ac, char **av);
 bool	init_mutex(t_life *life);
 bool	init_philos(t_life *life);
 bool	access_end_flag(t_life *life, t_rw rw, bool on);
+long	access_last_eat(t_philos *philo, t_rw rw, long time);
 
 #endif

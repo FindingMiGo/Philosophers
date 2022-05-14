@@ -14,6 +14,20 @@ bool	access_end_flag(t_life *life, t_rw rw, bool on)
 	return (ret);
 }
 
+long	access_last_eat(t_philos *philo, t_rw rw, long time)
+{
+	long ret;
+
+	ret = 0;
+	pthread_mutex_lock(&philo->life->last_eat_m);
+	if (rw == WRITE)
+		philo->last_eat = time;
+	else
+		ret = philo->last_eat;
+	pthread_mutex_unlock(&philo->life->last_eat_m);
+	return (ret);
+}
+
 int	ft_isdigit(int c)
 {
 	return ('0' <= c && c <= '9');
