@@ -34,7 +34,7 @@ bool	validate_arg(int ac, char **av)
 	av++;
 	if (!(ac == 4 || ac == 5))
 	{
-		write(1, "Missing argument\n", 17);
+		write(1, "Invalid argument\n", 17);
 		return (false);
 	}
 	if (!is_digit_args(ac, av))
@@ -64,8 +64,14 @@ bool	init_life(t_life *life, int ac, char **av)
 	{
 		if (!atoi_philo(&life->eat_limit, av[4]))
 			return (false);
+		life->limit = true;
 	}
 	life->end = false;
+	if (!life->pnum || !life->tdie || !life->teat || !life->tsleep)
+	{
+		write(1, "Invalid argument\n", 17);
+		return (false);
+	}
 	return (true);
 }
 
@@ -85,6 +91,8 @@ bool	init_mutex(t_life *life)
 	if (pthread_mutex_init(&life->flag, NULL) != 0)
 		return (false);
 	if (pthread_mutex_init(&life->last_eat_m, NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&life->completed_m, NULL) != 0)
 		return (false);
 	while (i < life->pnum)
 	{
@@ -114,6 +122,7 @@ bool	init_philos(t_life *life)
 		p[i].right = i;
 		p[i].left = i + 1; 
 		p[i].life = life;
+		p[i].eat_count = 0;
 		i++;
 	}
 	p[life->pnum - 1].left = 0;

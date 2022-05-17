@@ -1,18 +1,26 @@
 #include "philo.h"
 
+bool	is_complete_eating(t_life *life)
+{
+	return (access_completed_num(life, READ) >= life->pnum);
+}
+
 void	print_act(t_philos *p, t_act act, int id)
 {
 	const char	msg[5][18]
 		= {TAKE_MSG, EAT_MSG, SLEEP_MSG, THINK_MSG, DIE_MSG};
 	
 	pthread_mutex_lock(&p->life->print);
-	if (access_end_flag(p->life, READ, false))
+	if (!access_end_flag(p->life, READ, false))
 	{
 		pthread_mutex_unlock(&p->life->print);
 		return ;
 	}
+	// if (act == DIE || is_complete_eating(p->life))
 	if (act == DIE)
+	{
 		access_end_flag(p->life, WRITE, true);
+	}
 	printf(FMT, get_mstime(), id + 1, msg[act]);
 	pthread_mutex_unlock(&p->life->print);
 }
@@ -36,7 +44,9 @@ bool	philo_take(t_philos *p)
 void	philo_eat(t_philos *p)
 {
 	access_last_eat(p, WRITE, get_mstime());
-	// p->last_eat = get_mstime();
+	p->eat_count++;
+	if (p->eat_count == p->life->eat_limit)
+		access_completed_num(p->life, WRITE);
 	print_act(p, EAT, p->right);
 	wait_for_time(p->life->teat);
 	pthread_mutex_unlock(&p->life->forks[p->right]);
@@ -54,11 +64,28 @@ void	*stomach_monitor(void *philo)
 		time = get_mstime();
 		if (time >= access_last_eat(p, READ, 0) + p->life->tdie)
 		{
-			print_act(p, DIE, p->right);
+			// print_act(p, DIE, p->right);
+			// pthread_mutex_lock(&p->life->print);
+			access_end_flag(p->life, WRITE, true);
+			// printf(FMT, get_mstime(), p->right + 1, DIE_MSG);
+			// pthread_mutex_unlock(&p->life->print);
 			break;
 		}
 		usleep(300);
 	}
+	return (NULL);
+}
+
+void	*philo_routine_solitude(void *philo)
+{
+	t_philos	*p;
+
+	p = philo;
+	pthread_mutex_lock(&p->life->forks[0]);
+	printf(FMT, get_mstime(), 1, TAKE_MSG);
+	wait_for_time(p->life->tdie);
+	printf(FMT, get_mstime(), 1, DIE_MSG);
+	pthread_mutex_unlock(&p->life->forks[0]);
 	return (NULL);
 }
 
@@ -89,10 +116,16 @@ void	start_thread(t_life *life)
 	i = 0;
 	p = life->philos;
 	gettimeofday(&tv, NULL);
+	if (life->pnum == 1)
+	{
+		access_last_eat(&p[0], WRITE, tv.tv_sec * 1000 + tv.tv_usec / 1000);
+		pthread_create(&p[0].thread, NULL, &philo_routine_solitude, &p[0]);
+		pthread_join(p[0].thread, NULL);
+		return ;
+	}
 	while (i < life->pnum)
 	{
 		access_last_eat(&p[i], WRITE, tv.tv_sec * 1000 + tv.tv_usec / 1000);
-		// p[i].last_eat = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 		pthread_create(&p[i].thread, NULL, &philo_routine, &p[i]);
 		i++;
 	}

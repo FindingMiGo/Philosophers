@@ -45,5 +45,6 @@ bool	init_mutex(t_life *life);
 bool	init_philos(t_life *life);
 bool	access_end_flag(t_life *life, t_rw rw, bool on);
 long	access_last_eat(t_philos *philo, t_rw rw, long time);
+bool	access_completed_num(t_life *life, t_rw rw);
 
 #endif
