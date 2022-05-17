@@ -11,7 +11,7 @@ void	print_act(t_philos *p, t_act act, int id)
 		= {TAKE_MSG, EAT_MSG, SLEEP_MSG, THINK_MSG, DIE_MSG};
 	
 	pthread_mutex_lock(&p->life->print);
-	if (!access_end_flag(p->life, READ, false))
+	if (access_end_flag(p->life, READ, false))
 	{
 		pthread_mutex_unlock(&p->life->print);
 		return ;
@@ -32,13 +32,12 @@ void	philo_sleep_think(t_philos *p)
 	print_act(p, THINK, p->right);
 }
 
-bool	philo_take(t_philos *p)
+void	philo_take(t_philos *p)
 {
 	pthread_mutex_lock(&p->life->forks[p->right]);
 	print_act(p, TAKE, p->right);
 	pthread_mutex_lock(&p->life->forks[p->left]);
 	print_act(p, TAKE, p->right);
-	return (true);
 }
 
 void	philo_eat(t_philos *p)
@@ -64,9 +63,9 @@ void	*stomach_monitor(void *philo)
 		time = get_mstime();
 		if (time >= access_last_eat(p, READ, 0) + p->life->tdie)
 		{
-			// print_act(p, DIE, p->right);
+			print_act(p, DIE, p->right);
 			// pthread_mutex_lock(&p->life->print);
-			access_end_flag(p->life, WRITE, true);
+			// access_end_flag(p->life, WRITE, true);
 			// printf(FMT, get_mstime(), p->right + 1, DIE_MSG);
 			// pthread_mutex_unlock(&p->life->print);
 			break;

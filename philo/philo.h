@@ -19,7 +19,7 @@
 # define DIE_MSG "is died\n"
 
 # ifndef DELAY
-#  define DELAY 100
+#  define DELAY 300
 # endif
 
 typedef enum e_act{
