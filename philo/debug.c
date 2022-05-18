@@ -6,7 +6,7 @@ long	get_mstime(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec *1000 + tv.tv_usec / 1000);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 long	get_ustime(void)
@@ -20,7 +20,7 @@ long	get_ustime(void)
 void	wait_for_time(long int time)
 {
 	const long	dest_time = time * 1000 + get_ustime();
-	long	left_time;
+	long		left_time;
 
 	left_time = time * 1000;
 	while (left_time > 0)
@@ -43,7 +43,7 @@ void	print_life(t_life *life)
 
 void	print_philos(t_philos *p)
 {
-	size_t	i;
+	size_t			i;
 	unsigned int	pnum;
 
 	if (!p)

@@ -47,4 +47,15 @@ bool	access_end_flag(t_life *life, t_rw rw, bool on);
 long	access_last_eat(t_philos *philo, t_rw rw, long time);
 bool	access_completed_num(t_life *life, t_rw rw);
 
+bool	is_digit_args(int ac, char **av);
+
+bool	print_act(t_philos *p, t_act act, int id, bool end);
+bool	philo_take(t_philos *p);
+bool	philo_eat(t_philos *p);
+bool	philo_sleep_think(t_philos *p);
+
+void	*stomach_monitor(void *philo);
+void	*philo_routine_solitude(void *philo);
+void	*philo_routine(void *philo);
+
 #endif

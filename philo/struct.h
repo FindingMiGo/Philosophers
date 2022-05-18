@@ -28,6 +28,6 @@ typedef struct s_life{
 	pthread_mutex_t	flag;
 	pthread_mutex_t	last_eat_m;
 	pthread_mutex_t	completed_m;
-	}	t_life;
+}	t_life;
 
 #endif

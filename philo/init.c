@@ -1,33 +1,5 @@
 #include "philo.h"
 
-bool	is_digit_str(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-bool	is_digit_args(int ac, char **av)
-{
-	size_t	i;
-
-	i = 0;
-	while (ac - i > 0)
-	{
-		if (!is_digit_str(av[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
 bool	validate_arg(int ac, char **av)
 {
 	ac--;
@@ -47,8 +19,6 @@ bool	validate_arg(int ac, char **av)
 
 bool	init_life(t_life *life, int ac, char **av)
 {
-	if (!validate_arg(ac, av))
-		return (false);
 	ac--;
 	av++;
 	if (!atoi_philo(&life->pnum, av[0]))
@@ -80,7 +50,8 @@ bool	init_mutex(t_life *life)
 	unsigned int	i;
 
 	i = 0;
-	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * life->pnum);
+	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			 * life->pnum);
 	if (!life->forks)
 	{
 		printf("%s\n", "Memory allocation failure");
@@ -120,7 +91,7 @@ bool	init_philos(t_life *life)
 	{
 		p[i].thread = 0;
 		p[i].right = i;
-		p[i].left = i + 1; 
+		p[i].left = i + 1;
 		p[i].life = life;
 		p[i].eat_count = 0;
 		i++;

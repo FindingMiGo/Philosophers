@@ -1,13 +1,13 @@
 
 
-SRCS =	main.c utils.c init.c locked_val.c debug.c
+SRCS =	main.c utils.c init.c locked_val.c act.c routine.c debug.c
 
 NAME = philo
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 DEBUG =
 
 ifdef NO_FLAGS
@@ -37,7 +37,7 @@ nf :
 
 ht : fclean
 	$(MAKE) WITH_VALG=1
-	valgrind --tool=helgrind ./$(NAME) 10 200 100 100
+	valgrind --tool=helgrind ./$(NAME) 200 420 100 100
 
 hm : fclean
 	$(MAKE) WITH_VALG=1

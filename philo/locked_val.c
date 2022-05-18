@@ -1,25 +1,8 @@
 #include "philo.h"
 
-bool	access_end_flag(t_life *life, t_rw rw, bool on)
-{
-	bool ret;
-
-	pthread_mutex_lock(&life->flag);
-	ret = false;
-	if (rw == WRITE)
-	{
-		life->end = on;
-		ret = life->end;
-	}
-	else
-		ret = life->end;
-	pthread_mutex_unlock(&life->flag);
-	return (ret);
-}
-
 long	access_last_eat(t_philos *philo, t_rw rw, long time)
 {
-	long ret;
+	long	ret;
 
 	pthread_mutex_lock(&philo->life->last_eat_m);
 	ret = 0;
