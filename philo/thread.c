@@ -53,8 +53,8 @@ bool	start_thread(t_life *life)
 	if (life->pnum == 1)
 		return (solitary_philo(p, tv));
 	if (philo_thread_create(life->pnum, p, tv) == false)
-		return (false);
+		return (!clear_all_mutex(life));
 	if (philos_thread_join(life->pnum, p) == false)
-		return (false);
-	return (true);
+		return (!clear_all_mutex(life));
+	return (clear_all_mutex(life));
 }

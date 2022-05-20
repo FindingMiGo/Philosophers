@@ -1,6 +1,6 @@
 
 
-SRCS =	main.c utils.c init.c locked_val.c act.c routine.c thread.c debug.c
+SRCS =	main.c utils.c init.c locked_val.c act.c routine.c thread.c termination.c mutex.c debug.c
 
 NAME = philo
 
