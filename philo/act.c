@@ -65,6 +65,7 @@ bool	philo_eat(t_philos *p)
 	ret = true;
 	access_last_eat(p, WRITE, get_mstime());
 	p->eat_count++;
+	completed = 0;
 	if (p->life->eat_limit_f == true && p->eat_count == p->life->eat_limit)
 		completed = access_completed_num(p->life, WRITE);
 	if (p->life->eat_limit_f == true && completed >= p->life->pnum)
