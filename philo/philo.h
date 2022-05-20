@@ -69,9 +69,9 @@ void			*philo_routine(void *philo);
 bool			start_thread(t_life *life);
 void			*ft_memset(void *b, int c, size_t len);
 
-bool	print_error(t_err msg);
+bool			print_error(t_err msg);
 
-bool	clear_flag_mutex(t_life *life);
-bool	clear_all_mutex(t_life *life);
-void	free_life_and_philos(t_life *life);
+bool			clear_flag_mutex(t_life *life);
+bool			clear_all_mutex(t_life *life);
+void			free_life_and_philos(t_life *life);
 #endif

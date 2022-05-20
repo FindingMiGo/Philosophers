@@ -3,7 +3,7 @@
 bool	clear_forks_mutex(t_life *life)
 {
 	unsigned int	i;
-	
+
 	i = 0;
 	while (i < life->pnum)
 	{
