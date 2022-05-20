@@ -37,7 +37,7 @@ nf :
 
 ht : fclean
 	$(MAKE) WITH_VALG=1
-	valgrind --tool=helgrind ./$(NAME) 200 420 100 100
+	valgrind --tool=helgrind ./$(NAME) 200 420 100 100 1
 
 hm : fclean
 	$(MAKE) WITH_VALG=1

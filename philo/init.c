@@ -43,7 +43,7 @@ bool	init_life(t_life *life, int ac, char **av)
 	{
 		if (!atoi_philo(&life->eat_limit, av[4]))
 			return (print_error(OF_ERR));
-		life->limit = true;
+		life->eat_limit_f = true;
 	}
 	if (!life->pnum || !life->tdie || !life->teat || !life->tsleep)
 		return (print_error(ARG_ERR));

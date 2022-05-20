@@ -21,7 +21,7 @@ typedef struct s_life{
 	unsigned int	eat_limit;
 	unsigned int	completed_c;
 	bool			end;
-	bool			limit;
+	bool			eat_limit_f;
 	t_philos		*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
