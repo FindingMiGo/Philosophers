@@ -14,7 +14,7 @@ long	access_last_eat(t_philos *philo, t_rw rw, long time)
 	return (ret);
 }
 
-bool	access_completed_num(t_life *life, t_rw rw)
+unsigned int	access_completed_num(t_life *life, t_rw rw)
 {
 	unsigned int	ret;
 

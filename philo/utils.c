@@ -1,5 +1,15 @@
 #include "philo.h"
 
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)b;
+	while (len--)
+		*p++ = (unsigned char)c;
+	return (b);
+}
+
 int	ft_isdigit(int c)
 {
 	return ('0' <= c && c <= '9');

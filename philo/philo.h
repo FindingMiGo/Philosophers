@@ -35,27 +35,40 @@ typedef enum e_rw{
 	WRITE
 }	t_rw;
 
-int		ft_isdigit(int c);
-bool	atoi_philo(unsigned int *num, const char *str);
-bool	atol_philo(unsigned long *num, const char *str);
+typedef enum e_err{
+	ARG_ERR,
+	MALLOC_ERR,
+	OF_ERR,
+	INIT_ERR,
+	JOIN_ERR
+}	t_err;
 
-bool	validate_arg(int ac, char **av);
-bool	init_life(t_life *life, int ac, char **av);
-bool	init_mutex(t_life *life);
-bool	init_philos(t_life *life);
-bool	access_end_flag(t_life *life, t_rw rw, bool on);
-long	access_last_eat(t_philos *philo, t_rw rw, long time);
-bool	access_completed_num(t_life *life, t_rw rw);
+int				ft_isdigit(int c);
+bool			atoi_philo(unsigned int *num, const char *str);
+bool			atol_philo(unsigned long *num, const char *str);
 
-bool	is_digit_args(int ac, char **av);
+bool			validate_arg(int ac, char **av);
+bool			init_life(t_life *life, int ac, char **av);
+bool			init_mutex(t_life *life);
+bool			init_philos(t_life *life);
+bool			access_end_flag(t_life *life, t_rw rw, bool on);
+long			access_last_eat(t_philos *philo, t_rw rw, long time);
+unsigned int	access_completed_num(t_life *life, t_rw rw);
 
-bool	print_act(t_philos *p, t_act act, int id, bool end);
-bool	philo_take(t_philos *p);
-bool	philo_eat(t_philos *p);
-bool	philo_sleep_think(t_philos *p);
+bool			is_digit_args(int ac, char **av);
 
-void	*stomach_monitor(void *philo);
-void	*philo_routine_solitude(void *philo);
-void	*philo_routine(void *philo);
+bool			print_act(t_philos *p, t_act act, int id, bool end);
+bool			philo_take(t_philos *p);
+bool			philo_eat(t_philos *p);
+bool			philo_sleep_think(t_philos *p);
+
+void			*stomach_monitor(void *philo);
+void			*philo_routine_solitude(void *philo);
+void			*philo_routine(void *philo);
+
+bool			start_thread(t_life *life);
+void			*ft_memset(void *b, int c, size_t len);
+
+bool	print_error(t_err msg);
 
 #endif

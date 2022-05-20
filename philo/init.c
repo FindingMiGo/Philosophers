@@ -1,19 +1,28 @@
 #include "philo.h"
 
+bool	print_error(t_err msg)
+{
+	if (msg == ARG_ERR)
+		write(2, "Invalid argument\n", 17);
+	else if (msg == MALLOC_ERR)
+		write(2, "Memory allocation failure\n", 26);
+	else if (msg == OF_ERR)
+		write(2, "Variable overflowed\n", 20);
+	else if (msg == INIT_ERR)
+		write(2, "Initialization failure\n", 23);
+	else if (msg == JOIN_ERR)
+		write(2, "Failure to wait for thread to end\n", 34);
+	return (false);
+}
+
 bool	validate_arg(int ac, char **av)
 {
 	ac--;
 	av++;
 	if (!(ac == 4 || ac == 5))
-	{
-		write(1, "Invalid argument\n", 17);
-		return (false);
-	}
+		return (print_error(ARG_ERR));
 	if (!is_digit_args(ac, av))
-	{
-		write(1, "Invalid argument\n", 17);
-		return (false);
-	}
+		return (print_error(ARG_ERR));
 	return (true);
 }
 
@@ -21,27 +30,23 @@ bool	init_life(t_life *life, int ac, char **av)
 {
 	ac--;
 	av++;
+	ft_memset(life, 0, sizeof(t_life));
 	if (!atoi_philo(&life->pnum, av[0]))
-		return (false);
+		return (print_error(OF_ERR));
 	if (!atoi_philo(&life->tdie, av[1]))
-		return (false);
+		return (print_error(OF_ERR));
 	if (!atoi_philo(&life->teat, av[2]))
-		return (false);
+		return (print_error(OF_ERR));
 	if (!atoi_philo(&life->tsleep, av[3]))
-		return (false);
-	life->eat_limit = 0;
+		return (print_error(OF_ERR));
 	if (ac == 5)
 	{
 		if (!atoi_philo(&life->eat_limit, av[4]))
-			return (false);
+			return (print_error(OF_ERR));
 		life->limit = true;
 	}
-	life->end = false;
 	if (!life->pnum || !life->tdie || !life->teat || !life->tsleep)
-	{
-		write(1, "Invalid argument\n", 17);
-		return (false);
-	}
+		return (print_error(ARG_ERR));
 	return (true);
 }
 
@@ -52,23 +57,19 @@ bool	init_mutex(t_life *life)
 	i = 0;
 	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			 * life->pnum);
+	ft_memset(life->forks, 0, sizeof(pthread_mutex_t) * life->pnum);
 	if (!life->forks)
-	{
-		printf("%s\n", "Memory allocation failure");
-		return (false);
-	}
+		return (print_error(MALLOC_ERR));
 	if (pthread_mutex_init(&life->print, NULL) != 0)
-		return (false);
-	if (pthread_mutex_init(&life->flag, NULL) != 0)
-		return (false);
+		return (print_error(INIT_ERR));
 	if (pthread_mutex_init(&life->last_eat_m, NULL) != 0)
-		return (false);
+		return (print_error(INIT_ERR));
 	if (pthread_mutex_init(&life->completed_m, NULL) != 0)
-		return (false);
+		return (print_error(INIT_ERR));
 	while (i < life->pnum)
 	{
 		if (pthread_mutex_init(&life->forks[i], NULL) != 0)
-			return (false);
+			return (print_error(INIT_ERR));
 		i++;
 	}
 	return (true);
@@ -82,10 +83,7 @@ bool	init_philos(t_life *life)
 	i = 0;
 	life->philos = malloc(sizeof(t_philos) * life->pnum);
 	if (!life->philos)
-	{
-		printf("%s\n", "Memory allocation failure");
-		return (false);
-	}
+		return (print_error(MALLOC_ERR));
 	p = life->philos;
 	while (i < life->pnum)
 	{

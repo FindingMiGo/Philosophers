@@ -1,13 +1,13 @@
 
 
-SRCS =	main.c utils.c init.c locked_val.c act.c routine.c debug.c
+SRCS =	main.c utils.c init.c locked_val.c act.c routine.c thread.c debug.c
 
 NAME = philo
 
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 DEBUG =
 
 ifdef NO_FLAGS
