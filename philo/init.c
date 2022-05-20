@@ -53,8 +53,10 @@ bool	init_life(t_life *life, int ac, char **av)
 bool	init_mutex(t_life *life)
 {
 	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
+	j = 0;
 	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			 * life->pnum);
 	ft_memset(life->forks, 0, sizeof(pthread_mutex_t) * life->pnum);
@@ -69,7 +71,15 @@ bool	init_mutex(t_life *life)
 	while (i < life->pnum)
 	{
 		if (pthread_mutex_init(&life->forks[i], NULL) != 0)
+		{
+			while (j < i)
+			{
+				pthread_mutex_destroy(&life->forks[j]);
+				j++;
+			}
 			return (print_error(INIT_ERR));
+		}
+			
 		i++;
 	}
 	return (true);
