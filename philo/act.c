@@ -17,9 +17,13 @@ bool	print_act(t_philos *p, t_act act, int id, bool end)
 	{
 		printf(FMT, get_mstime(), id + 1, msg[act]);
 		if (end == true)
+		{
 			p->life->end = true;
-		ret = false;
+			ret = false;
+		}
 	}
+	else
+		ret = false;
 	pthread_mutex_unlock(&p->life->print);
 	return (ret);
 }
@@ -45,6 +49,11 @@ bool	philo_take(t_philos *p)
 	pthread_mutex_lock(&p->life->forks[p->left]);
 	if (!print_act(p, TAKE, p->right, false))
 		ret = false;
+	if (ret == false)
+	{
+		pthread_mutex_unlock(&p->life->forks[p->right]);
+		pthread_mutex_unlock(&p->life->forks[p->left]);
+	}
 	return (ret);
 }
 

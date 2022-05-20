@@ -41,10 +41,12 @@ void	*philo_routine(void *philo)
 		usleep(DELAY);
 	while (1)
 	{
-		philo_take(p);
-		philo_eat(p);
-		philo_sleep_think(p);
-		break ;
+		if (!philo_take(p))
+			break;
+		if (!philo_eat(p))
+			break;
+		if (!philo_sleep_think(p))
+			break;
 	}
 	return (NULL);
 }
