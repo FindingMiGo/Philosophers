@@ -42,11 +42,11 @@ void	*philo_routine(void *philo)
 	while (1)
 	{
 		if (!philo_take(p))
-			break;
+			break ;
 		if (!philo_eat(p))
-			break;
+			break ;
 		if (!philo_sleep_think(p))
-			break;
+			break ;
 	}
 	return (NULL);
 }
