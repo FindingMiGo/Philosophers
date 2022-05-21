@@ -30,7 +30,7 @@ bool	init_life(t_life *life, int ac, char **av)
 {
 	ac--;
 	av++;
-	ft_memset(life, 0, sizeof(t_life));
+	memset(life, 0, sizeof(t_life));
 	if (!atoi_philo(&life->pnum, av[0]))
 		return (print_error(OF_ERR));
 	if (!atoi_philo(&life->tdie, av[1]))

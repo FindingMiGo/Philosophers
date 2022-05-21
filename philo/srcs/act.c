@@ -32,7 +32,7 @@ bool	philo_sleep_think(t_philos *p)
 {
 	if (!print_act(p, SLEEP, p->right, false))
 		return (false);
-	wait_for_time(p->life->tsleep);
+	wait_for_specified_time(p->life->tsleep);
 	if (!print_act(p, THINK, p->right, false))
 		return (false);
 	return (true);
@@ -78,7 +78,7 @@ bool	philo_eat(t_philos *p)
 		if (!print_act(p, EAT, p->right, false))
 			ret = false;
 	}
-	wait_for_time(p->life->teat);
+	wait_for_specified_time(p->life->teat);
 	pthread_mutex_unlock(&p->life->forks[p->right]);
 	pthread_mutex_unlock(&p->life->forks[p->left]);
 	return (ret);

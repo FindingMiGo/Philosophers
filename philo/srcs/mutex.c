@@ -39,7 +39,7 @@ bool	init_mutex(t_life *life)
 	i = 0;
 	life->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			 * life->pnum);
-	ft_memset(life->forks, 0, sizeof(pthread_mutex_t) * life->pnum);
+	memset(life->forks, 0, sizeof(pthread_mutex_t) * life->pnum);
 	if (!life->forks)
 		return (print_error(MALLOC_ERR));
 	if (init_flag_mutex(life) == false)

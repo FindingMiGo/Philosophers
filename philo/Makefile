@@ -1,6 +1,6 @@
 
 
-SRC =	main.c utils.c init.c locked_val.c act.c routine.c thread.c termination.c mutex.c debug.c
+SRC =	main.c utils.c init.c locked_val.c act.c routine.c thread.c termination.c mutex.c time.c debug.c
 
 SRCDIR = srcs
 

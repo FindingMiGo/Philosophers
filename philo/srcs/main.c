@@ -18,7 +18,10 @@ int	main(int ac, char **av)
 	if (validate_arg(ac, av) == false)
 		return (0);
 	if (init_all(&life, ac, av) == true)
+	{
+		print_life(&life);
 		start_thread(&life);
+	}
 	free_life_and_philos(&life);
 	return (0);
 }

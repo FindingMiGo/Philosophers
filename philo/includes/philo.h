@@ -8,6 +8,7 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <string.h>
 # include "struct.h"
 # include "debug.h"
 
