@@ -15,6 +15,13 @@ bool	init_flag_mutex(t_life *life)
 		pthread_mutex_destroy(&life->last_eat_m);
 		return (print_error(INIT_ERR));
 	}
+	if (pthread_mutex_init(&life->end_m, NULL) != 0)
+	{
+		pthread_mutex_destroy(&life->print);
+		pthread_mutex_destroy(&life->last_eat_m);
+		pthread_mutex_destroy(&life->completed_m);
+		return (print_error(INIT_ERR));
+	}
 	return (true);
 }
 

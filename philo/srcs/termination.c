@@ -18,6 +18,7 @@ bool	clear_flag_mutex(t_life *life)
 	pthread_mutex_destroy(&life->print);
 	pthread_mutex_destroy(&life->last_eat_m);
 	pthread_mutex_destroy(&life->completed_m);
+	pthread_mutex_destroy(&life->end_m);
 	return (true);
 }
 
