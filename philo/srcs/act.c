@@ -10,7 +10,7 @@ bool	print_act(t_philos *p, t_act act, int id, bool end)
 	ret = true;
 	if (access_end_flag(p->life, READ, false) == false)
 	{
-		printf("%ld %3d %s", get_mstime(), id + 1, msg[act]);
+		printf("%ld %d %s", get_mstime(), id + 1, msg[act]);
 		if (end == true)
 		{
 			access_end_flag(p->life, WRITE, true);
