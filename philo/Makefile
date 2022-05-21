@@ -1,49 +1,42 @@
 
 
-SRC =	main.c utils.c init.c locked_val.c act.c routine.c thread.c termination.c mutex.c time.c debug.c
+SRC =	main.c utils.c init.c locked_val.c act.c\
+		routine.c thread.c termination.c mutex.c time.c
 
-SRCDIR = srcs
+SRCDIR =	srcs
 
-SRCS = $(addprefix $(SRCDIR)/, $(SRC))
+SRCS =	$(addprefix $(SRCDIR)/, $(SRC))
 
 INCLUDE =	-I./includes/
 
-NAME = philo
+NAME =	philo
 
-OBJS = $(SRCS:.c=.o)
+OBJS =	$(SRCS:.c=.o)
 
-CC = gcc
+CC =	gcc
 CFLAGS = -Wall -Wextra -Werror
-DEBUG =
 
 ifdef WITH_SANITIZE
-DEBUG = -fsanitize=thread
+CFLAGS += -g -fsanitize=thread
 endif
 
 .c.o :
-	$(CC) $(CFLAGS) $(DEBUG) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) $(DEBUG) -pthread $(INCLUDE) -o $(NAME) $(OBJS)
+			$(CC) $(CFLAGS) -pthread $(INCLUDE) -o $(NAME) $(OBJS)
 
-all: $(NAME)
+all:	$(NAME)
 
 clean:
 	rm -rf $(OBJS)
 
-fclean: clean
+fclean:	clean
 	rm -f $(NAME)
 
-re: fclean all
+re:		fclean all
 
-hel : re
-	valgrind --tool=helgrind ./$(NAME) 200 420 100 100
-
-val : re
-	valgrind ./$(NAME) 200 410 200 200
-
-san : fclean
-	make WITH_SANITIZE=1
-	./$(NAME) 200 410 200 200
+san :	fclean
+		make WITH_SANITIZE=1
 
 .PHONY:		all clean fclean re hel val san

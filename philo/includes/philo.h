@@ -10,7 +10,6 @@
 # include <sys/time.h>
 # include <string.h>
 # include "struct.h"
-# include "debug.h"
 
 # define TAKE_MSG "has taken a fork\n"
 # define EAT_MSG "is eating\n"
@@ -77,5 +76,9 @@ bool			start_thread(t_life *life);
 bool			clear_flag_mutex(t_life *life);
 bool			clear_all_mutex(t_life *life);
 void			free_life_and_philos(t_life *life);
+
+// time.c
+long			get_mstime(void);
+void			wait_for_specified_time(long int time);
 
 #endif
