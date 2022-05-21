@@ -27,6 +27,7 @@ typedef struct s_life{
 	pthread_mutex_t	print;
 	pthread_mutex_t	last_eat_m;
 	pthread_mutex_t	completed_m;
+	pthread_mutex_t	end_m;
 }	t_life;
 
 #endif

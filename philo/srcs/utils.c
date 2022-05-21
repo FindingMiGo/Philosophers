@@ -43,7 +43,7 @@ bool	atoi_philo(unsigned int *num, const char *str)
 	*num = 0;
 	while ('0' <= str[i] && str[i] <= '9')
 	{
-		if (ans > (INT_MAX - (str[i] - '0')) / 10)
+		if (ans > (UINT_MAX - (str[i] - '0')) / 10)
 			return (false);
 		ans = ans * 10 + (str[i] - '0');
 		i++;

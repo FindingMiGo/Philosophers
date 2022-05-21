@@ -1,5 +1,5 @@
 #include "philo.h"
-// #include "debug.h"
+#include "debug.h"
 
 void	print_life(t_life *life)
 {

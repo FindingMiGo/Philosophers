@@ -1,10 +1,5 @@
 #include "philo.h"
 
-bool	is_complete_eating(t_life *life)
-{
-	return (access_completed_num(life, READ) >= life->pnum);
-}
-
 bool	print_act(t_philos *p, t_act act, int id, bool end)
 {
 	bool		ret;
@@ -13,12 +8,12 @@ bool	print_act(t_philos *p, t_act act, int id, bool end)
 
 	pthread_mutex_lock(&p->life->print);
 	ret = true;
-	if (p->life->end == false)
+	if (access_end_flag(p->life, READ, false) == false)
 	{
-		printf(FMT, get_mstime(), id + 1, msg[act]);
+		printf("%ld %3d %s", get_mstime(), id + 1, msg[act]);
 		if (end == true)
 		{
-			p->life->end = true;
+			access_end_flag(p->life, WRITE, true);
 			ret = false;
 		}
 	}

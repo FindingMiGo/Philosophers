@@ -36,17 +36,14 @@ fclean: clean
 
 re: fclean all
 
-nf :
-	$(MAKE) fclean
-	make NO_FLAGS=1
+hel : re
+	valgrind --tool=helgrind ./$(NAME) 200 420 100 100
 
-ht : re
-	valgrind --tool=helgrind ./$(NAME) 200 420 100 100 1
-
-hm : re
-	valgrind ./$(NAME) 10 200 100 100
+val : re
+	valgrind ./$(NAME) 200 410 200 200
 
 san : fclean
 	make WITH_SANITIZE=1
+	./$(NAME) 200 410 200 200
 
-.PHONY:		all clean fclean re san
+.PHONY:		all clean fclean re hel val san

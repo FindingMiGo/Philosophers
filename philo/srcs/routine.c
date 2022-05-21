@@ -6,7 +6,7 @@ void	*stomach_monitor(void *philo)
 	long		time;
 
 	p = philo;
-	while (1)
+	while (access_end_flag(p->life, READ, false) == false)
 	{
 		time = get_mstime();
 		if (time >= access_last_eat(p, READ, 0) + p->life->tdie)
@@ -25,9 +25,9 @@ void	*philo_routine_solitude(void *philo)
 
 	p = philo;
 	pthread_mutex_lock(&p->life->forks[0]);
-	printf(FMT, get_mstime(), 1, TAKE_MSG);
+	printf("%ld %3d %s", get_mstime(), 1, TAKE_MSG);
 	wait_for_specified_time(p->life->tdie);
-	printf(FMT, get_mstime(), 1, DIE_MSG);
+	printf("%ld %3d %s", get_mstime(), 1, DIE_MSG);
 	pthread_mutex_unlock(&p->life->forks[0]);
 	return (NULL);
 }
