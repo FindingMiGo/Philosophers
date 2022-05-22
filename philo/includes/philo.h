@@ -15,7 +15,7 @@
 # define EAT_MSG "is eating\n"
 # define SLEEP_MSG "is sleeping\n"
 # define THINK_MSG "is thinking\n"
-# define DIE_MSG "is died\n"
+# define DIE_MSG "died\n"
 
 # ifndef DELAY
 #  define DELAY 300
