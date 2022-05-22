@@ -39,4 +39,4 @@ re:		fclean all
 san :	fclean
 		make WITH_SANITIZE=1
 
-.PHONY:		all clean fclean re hel val san
+.PHONY:		all clean fclean re san
