@@ -43,7 +43,7 @@ typedef enum e_err{
 }	t_err;
 
 // act.c
-bool			print_act(t_philos *p, t_act act, int id, bool end);
+bool			print_act(t_philos *p, t_act act, unsigned int id, bool end);
 bool			philo_take(t_philos *p);
 bool			philo_eat(t_philos *p);
 bool			philo_sleep_think(t_philos *p);

@@ -7,7 +7,7 @@ bool	print_error(t_err msg)
 	else if (msg == MALLOC_ERR)
 		write(2, "Memory allocation failure\n", 26);
 	else if (msg == LARGE_ERR)
-		write(2, "The value is too large\n", 20);
+		write(2, "The value is too large\n", 23);
 	else if (msg == INIT_ERR)
 		write(2, "Initialization failure\n", 23);
 	else if (msg == JOIN_ERR)
