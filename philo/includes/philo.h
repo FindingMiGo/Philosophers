@@ -37,7 +37,7 @@ typedef enum e_rw{
 typedef enum e_err{
 	ARG_ERR,
 	MALLOC_ERR,
-	OF_ERR,
+	LARGE_ERR,
 	INIT_ERR,
 	JOIN_ERR
 }	t_err;

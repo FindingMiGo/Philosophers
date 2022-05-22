@@ -6,8 +6,8 @@ bool	print_error(t_err msg)
 		write(2, "Invalid argument\n", 17);
 	else if (msg == MALLOC_ERR)
 		write(2, "Memory allocation failure\n", 26);
-	else if (msg == OF_ERR)
-		write(2, "Variable overflowed\n", 20);
+	else if (msg == LARGE_ERR)
+		write(2, "The value is too large\n", 20);
 	else if (msg == INIT_ERR)
 		write(2, "Initialization failure\n", 23);
 	else if (msg == JOIN_ERR)
@@ -32,17 +32,17 @@ bool	init_life(t_life *life, int ac, char **av)
 	av++;
 	memset(life, 0, sizeof(t_life));
 	if (!atoi_philo(&life->pnum, av[0]))
-		return (print_error(OF_ERR));
+		return (print_error(LARGE_ERR));
 	if (!atoi_philo(&life->tdie, av[1]))
-		return (print_error(OF_ERR));
+		return (print_error(LARGE_ERR));
 	if (!atoi_philo(&life->teat, av[2]))
-		return (print_error(OF_ERR));
+		return (print_error(LARGE_ERR));
 	if (!atoi_philo(&life->tsleep, av[3]))
-		return (print_error(OF_ERR));
+		return (print_error(LARGE_ERR));
 	if (ac == 5)
 	{
 		if (!atoi_philo(&life->eat_limit, av[4]))
-			return (print_error(OF_ERR));
+			return (print_error(LARGE_ERR));
 		life->eat_limit_f = true;
 	}
 	if (!life->pnum || !life->tdie || !life->teat || !life->tsleep)
