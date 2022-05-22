@@ -27,7 +27,7 @@ bool	philo_sleep_think(t_philos *p)
 {
 	if (!print_act(p, SLEEP, p->right, false))
 		return (false);
-	wait_until_specified_time(p->life->tsleep);
+	wait_until_specified_time(p->life->tsleep, p->life);
 	if (!print_act(p, THINK, p->right, false))
 		return (false);
 	return (true);
@@ -61,7 +61,7 @@ bool	philo_eat(t_philos *p)
 	access_last_eat(p, WRITE, get_mstime());
 	if (!print_act(p, EAT, p->right, false))
 		ret = false;
-	wait_until_specified_time(p->life->teat);
+	wait_until_specified_time(p->life->teat, p->life);
 	if (p->life->eat_limit_f == true)
 	{
 		p->eat_count++;

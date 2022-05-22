@@ -79,6 +79,6 @@ void			free_life_and_philos(t_life *life);
 
 // time.c
 long			get_mstime(void);
-void			wait_until_specified_time(unsigned int time);
+void			wait_until_specified_time(unsigned int time, t_life *life);
 
 #endif

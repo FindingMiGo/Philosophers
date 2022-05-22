@@ -16,7 +16,7 @@ long	get_ustime(void)
 	return (tv.tv_sec * 1000000 + tv.tv_usec);
 }
 
-void	wait_until_specified_time(unsigned int time)
+void	wait_until_specified_time(unsigned int time, t_life *life)
 {
 	long	dest_time;
 	long	remain;
@@ -25,7 +25,7 @@ void	wait_until_specified_time(unsigned int time)
 	t = (long)time;
 	dest_time = get_ustime() + (t * 1000);
 	remain = t * 1000;
-	while (remain > 0)
+	while (remain > 0 && access_end_flag(life, READ, false) == false)
 	{
 		usleep(remain / 2);
 		remain = dest_time - get_ustime();

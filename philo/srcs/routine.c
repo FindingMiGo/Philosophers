@@ -26,7 +26,7 @@ void	*philo_routine_solitude(void *philo)
 	p = philo;
 	pthread_mutex_lock(&p->life->forks[0]);
 	printf("%ld %u %s", get_mstime(), 1, TAKE_MSG);
-	wait_until_specified_time(p->life->tdie);
+	wait_until_specified_time(p->life->tdie, p->life);
 	printf("%ld %u %s", get_mstime(), 1, DIE_MSG);
 	pthread_mutex_unlock(&p->life->forks[0]);
 	return (NULL);
