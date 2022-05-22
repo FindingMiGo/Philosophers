@@ -19,13 +19,13 @@ long	get_ustime(void)
 void	wait_for_specified_time(long int time)
 {
 	long	dest_time;
-	long	left_time;
+	long	remain;
 
 	dest_time = get_ustime() + time * 1000;
-	left_time = time * 1000;
-	while (left_time > 0)
+	remain = time * 1000;
+	while (remain > 0)
 	{
-		usleep(left_time / 2);
-		left_time = dest_time - get_ustime();
+		usleep(remain / 2);
+		remain = dest_time - get_ustime();
 	}
 }

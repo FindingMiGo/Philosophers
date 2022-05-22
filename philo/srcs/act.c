@@ -59,21 +59,18 @@ bool	philo_eat(t_philos *p)
 
 	ret = true;
 	access_last_eat(p, WRITE, get_mstime());
-	p->eat_count++;
-	completed = 0;
-	if (p->life->eat_limit_f == true && p->eat_count == p->life->eat_limit)
-		completed = access_completed_num(p->life, WRITE);
-	if (p->life->eat_limit_f == true && completed >= p->life->pnum)
-	{
-		if (!print_act(p, EAT, p->right, true))
-			ret = false;
-	}
-	else
-	{
-		if (!print_act(p, EAT, p->right, false))
-			ret = false;
-	}
+	if (!print_act(p, EAT, p->right, false))
+		ret = false;
 	wait_for_specified_time(p->life->teat);
+	if (p->life->eat_limit_f == true)
+	{
+		p->eat_count++;
+		completed = 0;
+		if (p->eat_count == p->life->eat_limit)
+			completed = access_completed_num(p->life, WRITE);
+		if (completed >= p->life->pnum)
+			access_end_flag(p->life, WRITE, true);
+	}
 	pthread_mutex_unlock(&p->life->forks[p->right]);
 	pthread_mutex_unlock(&p->life->forks[p->left]);
 	return (ret);
